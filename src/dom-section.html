@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM - Section</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link rel="stylesheet" href="./css/dom-06-final.css" />
+    <script type="module" src="./js/dom-section.js"></script>
+  </head>
+  <body>
+    <template id="tmp-input">
+      <section class="cmp-section-container-all">
+        <div class="cmp-section-container">
+          <label id="head-input">
+            <button type="button" class="cmd-add-input-number cl-primary">
+              <i class="material-icons">add</i>
+              input</button
+            ><br />
+            <b class="cmp-input-title"
+              >Section <span class="cmp-input-no-section cl-number"></span>
+            </b>
+            <button type="button" class="cmd-remove-section cl-warn">
+              <i class="material-icons">delete_forever</i>
+            </button>
+          </label>
+          <br />
+          <label>
+            <b class="cmp-input-title"
+              >Number <span class="cmp-input-no cl-number"></span
+            ></b>
+            <input type="number" value="0" required class="cmp-number" />
+          </label>
+          <button type="button" class="cmd-remove-input-number cl-warn">
+            <i class="material-icons">delete_forever</i>
+          </button>
+          <div class="cmp-input-number"></div>
+          <div class="cmp-output-container">
+            <label>
+              <b class="cmp-input-title"
+                ><span class="cl-filler"></span>Result</b
+              >
+              <output class="cmp-result-section cl-number">0</output>
+            </label>
+          </div>
+        </div>
+      </section>
+    </template>
+
+    <main>
+      <section class="cmp-input-section">
+        <button type="button" class="cmd-add-section cl-primary">
+          <i class="material-icons">add</i>
+          Section
+        </button>
+        <div class="cmp-inputs-section"></div>
+        <div class="cmp-output-container">
+          <label>
+            <b class="cmp-input-title"><span class="cl-filler"></span> Total</b>
+            <output class="cmp-result cl-number">0</output>
+          </label>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
