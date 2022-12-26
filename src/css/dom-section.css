@@ -25,7 +25,7 @@ button,
 }
 
 .cl-primary {
-  color: #0000ff;
+  color: #1b1bcd;
 }
 
 .cl-warn {
@@ -105,4 +105,30 @@ input[type='number'],
 
   font-weight: bold;
   text-decoration: underline double;
+}
+
+.cmp-input-section {
+  border-top: black 1px solid;
+  margin: 10px auto;
+}
+
+.cmp-section-title {
+  margin-top: 10px;
+}
+
+.button-section {
+  text-align: center;
+}
+.button-section > button {
+  background-color: tomato;
+  border-radius: 10%;
+  margin-top: 10px;
+}
+
+.cmd-remove-section {
+  margin-left: 162.8px;
+}
+
+.cmp-section-title {
+  margin-bottom: 10px;
 }

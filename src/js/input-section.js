@@ -1,92 +1,52 @@
-function computeTotal(inputsContainer, resultComponent) {
-  const total = [...inputsContainer.querySelectorAll('.cmp-section-container')]
-    .map((elem) => elem.querySelector('.cmp-input'))
-    .reduce((carry, elem) => carry + elem.valueAsNumber, 0);
+import { assign as assignInput } from './input.js';
 
-  resultComponent.value = total;
-}
-
-function computeTotalSection(inputsContainer, containersection, resultsection) {
-  const totalsection = [
-    ...containersection.squerySelectorAll('.cmp-section-container'),
-  ]
-    .map((elem) => elem.querySelector('.cmp-number'))
-    .reduce((carry, elem) => carry + elem.valueAsNumber, 0);
-
-  resultsection.value = totalsection;
-}
-
-function rebuildIndex(inputsContainer) {
-  const inputContainers = [
-    //inputContainers = cmp-section-container
-    ...inputsContainer.querySelectorAll('.cmp-section-container'),
+function rebuildIndex(sectionsContainer) {
+  const inputSections = [
+    ...sectionsContainer.querySelectorAll('.cmp-input-section'),
   ];
 
-  inputContainers.forEach((elem, i) => {
-    [...elem.querySelectorAll('.cmp-input-no-section')].forEach((elem) => {
-      elem.innerText = i + 1;
+  inputSections.forEach((inputSection, index) => {
+    [...inputSection.querySelectorAll('.cmp-section-no')].forEach((elem) => {
+      elem.innerText = index + 1;
     });
+
+    [...inputSection.querySelectorAll('.cmd-remove-section')].forEach(
+      (elem) => {
+        elem.disabled = !(inputSections.length > 1);
+      },
+    );
   });
-
-  [...inputsContainer.querySelectorAll('.cmd-remove-section')].forEach(
-    (elem) => {
-      elem.disabled = !(inputContainers.length > 1);
-    },
-  );
 }
 
-function add(inputsContainer, resultComponent, template) {
-  const fragment = template.content.cloneNode(true);
+function add(sectionsContainer, inputTemplate, sectionTemplate) {
+  const fragment = sectionTemplate.content.cloneNode(true);
+  const inputSection = fragment.querySelector('.cmp-input-section');
 
-  inputsContainer.append(fragment);
-
-  rebuildIndex(inputsContainer);
-  computeTotal(inputsContainer, resultComponent);
+  sectionsContainer.append(fragment);
+  assignInput(inputSection, inputTemplate);
+  rebuildIndex(sectionsContainer);
 }
 
-function addnumber(inputContainer, templates) {}
-
-function remove(inputsContainer, resultComponent, inputContainer) {
-  inputContainer.remove();
-
-  rebuildIndex(inputsContainer);
-  computeTotal(inputsContainer, resultComponent);
+function remove(sectionsContainer, inputSection) {
+  inputSection.remove();
+  rebuildIndex(sectionsContainer);
 }
 
-export function assign(inputSection, inputTemplate, inputContainerSection) {
-  const inputsContainer = inputSection.querySelector('.cmp-inputs-section');
-  const resultComponent = inputSection.querySelector('.cmp-result');
-  const containersection = inputContainerSection.querySelector(
-    'cmp-section-container',
-  );
-  const resultsection =
-    inputContainerSection.querySelector('cmp-result-section');
+export function assign(container, sectionTemplate, inputTemplate) {
+  const sectionsContainer = container.querySelector('.cmp-sections-container');
 
-  inputSection.addEventListener('click', (ev) => {
+  container.addEventListener('click', (ev) => {
     if (ev.target.matches('.cmd-add-section')) {
-      add(inputsContainer, resultComponent, inputTemplate);
+      add(sectionsContainer, sectionTemplate, inputTemplate);
     }
   });
 
-  inputsContainer.addEventListener('change', (ev) => {
-    if (ev.target.matches('input[type="number"]')) {
-      computeTotal(inputsContainer, resultComponent);
-    }
-  });
-
-  inputsContainer.addEventListener('click', (ev) => {
+  sectionsContainer.addEventListener('click', (ev) => {
     if (ev.target.matches('.cmd-remove-section')) {
-      const inputContainer = ev.target.closest('.cmp-section-container');
-      remove(inputsContainer, resultComponent, inputContainer);
+      const inputSection = ev.target.closest('.cmp-input-section');
+
+      remove(sectionsContainer, inputSection);
     }
   });
-
-  containersection.addEventListener('change', (ev) => {
-    //change number section
-    if (ev.target.matches('input[type="number"]')) {
-      computeTotalSection(containersection, resultsection);
-    }
-  });
-
-  add(inputsContainer, resultComponent, inputTemplate);
+  add(sectionsContainer, sectionTemplate, inputTemplate);
 }
